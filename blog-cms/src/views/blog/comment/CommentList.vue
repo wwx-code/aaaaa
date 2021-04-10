@@ -33,8 +33,8 @@
             <el-table-column label="QQ" prop="qq" width="115"></el-table-column>
             <el-table-column label="所在页面" show-overflow-tooltip>
                 <template v-slot="scope">
-                    <el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank"
-                             v-if="scope.row.page===0">{{ scope.row.blog.title }}
+                    <el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank">
+                        {{ scope.row.blog.title }}
                     </el-link>
                 </template>
             </el-table-column>
@@ -163,6 +163,7 @@
         methods: {
             getCommentList() {
                 getCommentListByQuery(this.queryInfo).then(res => {
+                    console.log(res)
                     this.msgSuccess(res.data.msg);
                     this.commentList = res.data.data.records
                     this.total = res.data.data.total

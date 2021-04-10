@@ -72,7 +72,11 @@
 <style scoped>
     .login_container {
         height: 100%;
-        background-color: #2b4b6b;
+        width: 100%;
+        background-image: url("../assets/img/login_bg.jpg");
+        background-size: cover;
+        background-position: center;
+        position: relative;
     }
 
     .login_box {

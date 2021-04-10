@@ -81,16 +81,6 @@
                             },
                             {
                                 id: 15,
-                                title: '分类管理',
-                                path: '/categories'
-                            },
-                            {
-                                id: 16,
-                                title: '标签管理',
-                                path: '/tags'
-                            },
-                            {
-                                id: 17,
                                 title: '评论管理',
                                 path: '/comments'
                             }
@@ -98,34 +88,39 @@
                     },
                     {
                         id: 2,
-                        title: '页面管理',
+                        title: '分类标签',
                         children: [
                             {
                                 id: 21,
-                                title: '站点设置',
-                                path: '/siteSettings'
+                                title: '分类管理',
+                                path: '/categories'
                             },
                             {
                                 id: 22,
-                                title: '友链管理',
-                                path: '/friends'
+                                title: '标签管理',
+                                path: '/tags'
                             },
-                            {
-                                id: 23,
-                                title: '关于我',
-                                path: '/about'
-                            }
                         ]
                     },
                     {
                         id: 3,
-                        title: '系统管理',
+                        title: '页面管理',
                         children: [
                             {
                                 id: 31,
-                                title: '定时任务',
-                                path: '/jobs'
+                                title: '站点设置',
+                                path: '/siteSettings'
                             },
+                            {
+                                id: 32,
+                                title: '友链管理',
+                                path: '/friends'
+                            },
+                            {
+                                id: 33,
+                                title: '关于我',
+                                path: '/about'
+                            }
                         ]
                     },
                     {
@@ -165,13 +160,13 @@
                         children: [
                             {
                                 id: 51,
-                                title: '访客统计',
-                                path: '/visitor'
+                                title: '定时任务',
+                                path: '/jobs'
                             },
                             {
                                 id: 52,
-                                title: '受访页面',
-                                path: '/visitPage'
+                                title: '访客统计',
+                                path: '/visitor'
                             }
                         ]
                     },
@@ -186,20 +181,19 @@
                     '12': 'el-icon-edit',
                     '13': 'el-icon-s-order',
                     '14': 'el-icon-chat-dot-round',
-                    '15': 'el-icon-s-opportunity',
-                    '16': 'el-icon-collection-tag',
-                    '17': 'el-icon-s-comment',
-                    '21': 'submenu ali-iconfont icon-bianjizhandian',
-                    '22': 'el-icon-user',
-                    '23': 'el-icon-tickets',
-                    '31': 'el-icon-alarm-clock',
+                    '15': 'el-icon-s-comment',
+                    '21': 'el-icon-s-opportunity',
+                    '22': 'el-icon-collection-tag',
+                    '31': 'submenu ali-iconfont icon-bianjizhandian',
+                    '32': 'el-icon-user',
+                    '33': 'el-icon-tickets',
                     '41': 'el-icon-alarm-clock',
                     '42': 'el-icon-finished',
                     '43': 'el-icon-document-checked',
                     '44': 'el-icon-document-delete',
                     '45': 'el-icon-data-line',
-                    '51': 'el-icon-s-marketing',
-                    '52': 'el-icon-view',
+                    '51': 'el-icon-alarm-clock',
+                    '52': 'el-icon-s-marketing',
                 },
                 //默认打开的菜单
                 defaultOpeneds: ['1', '2', '3', '4', '5'],

@@ -236,7 +236,6 @@
                 // })
             },
             computeCategoryAndTag(blog) {
-                console.log(blog)
                 blog.categoryId = blog.category.id
                 blog.tagList = []
                 if (blog.tags && blog.tags.length > 0) {
@@ -259,8 +258,6 @@
                 })
             },
             submit() {
-                console.log(this.form)
-                return
                 if (this.radio === 3 && (this.form.password === '' || this.form.password === null)) {
                     return this.msgError("密码保护模式必须填写密码！")
                 }
@@ -284,7 +281,7 @@
                             this.form.category = null
                             this.form.tags = null
                             updateBlog(this.form).then(res => {
-                                if (res.code == 200) {
+                                if (res.data.code == 200) {
                                     this.msgSuccess(res.data.msg)
                                     this.$router.push('/blogs')
                                 } else {
@@ -295,7 +292,7 @@
                             })
                         } else {
                             saveBlog(this.form).then(res => {
-                                if (res.code == 200) {
+                                if (res.data.code == 200) {
                                     this.msgSuccess(res.data.msg)
                                     this.$router.push('/blogs')
                                 } else {

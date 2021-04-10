@@ -18,7 +18,7 @@
             <el-table-column label="操作" width="200">
                 <template v-slot="scope">
                     <el-button type="primary" icon="el-icon-edit" size="mini" @click="goEditMomentPage(scope.row.id)">编辑</el-button>
-                    <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @click="deleteMomentById(scope.row.id)">
+                    <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @confirm="deleteMomentById(scope.row.id)">
                         <el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
                     </el-popconfirm>
                 </template>
@@ -91,7 +91,7 @@
             //根据id删除动态
             deleteMomentById(id) {
                 deleteMomentById(id).then(res => {
-                    if (res.code == 200) {
+                    if (res.data.code == 200) {
                         this.msgSuccess(res.data.msg)
                         this.getMomentList()
                     } else {
