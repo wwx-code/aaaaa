@@ -14,13 +14,11 @@ import 'semantic-ui-css/semantic.min.css'
 //element-ui
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-//moment
-import './util/dateTimeFormatUtils.js'
 //v-viewer
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 //directive
-import './util/directive'
+// import './util/directive'
 
 Vue.config.productionTip = false
 
