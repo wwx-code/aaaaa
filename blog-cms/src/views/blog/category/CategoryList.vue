@@ -154,7 +154,6 @@
                 this.editDialogVisible = true
             },
             deleteCategory(id) {
-                alert(123)
                 deleteCategoryById(id).then(res => {
                     if (res.data.code == 200) {
                         this.msgSuccess(res.data.msg)

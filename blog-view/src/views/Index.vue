@@ -17,7 +17,7 @@
                         </div>
 
                         <!--右侧-->
-                        <div class="three wide column m-mobile-hide">
+                        <div class="four wide column m-mobile-hide right floated">
                             <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none':focusMode}"/>
                             <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
                             <!--只在文章页面显示目录-->
@@ -31,11 +31,16 @@
 </template>
 
 <script>
+    import {getHitokoto, getSite} from '@/api/index'
     import Nav from "@/components/index/Nav";
+    import Tags from "@/components/sidebar/Tags";
+    import RandomBlog from "@/components/sidebar/RandomBlog";
+    import Tocbot from "@/components/sidebar/Tocbot";
     import {mapState} from 'vuex'
+    import {SAVE_CLIENT_SIZE} from "../store/mutations-types";
     export default {
         name: "Index",
-        components: {Nav},
+        components: {Nav, Tags, Tocbot, RandomBlog},
         data() {
             return {
                 siteInfo: {
@@ -46,7 +51,6 @@
                 randomBlogList: [],
                 badges: [],
                 newBlogList: [],
-                hitokoto: {},
             }
         },
         computed: {
@@ -59,8 +63,31 @@
             }
         },
         created() {
+            this.getSite()
         },
-        methods: {}
+        mounted() {
+            //保存可视窗口大小
+            this.$store.commit(SAVE_CLIENT_SIZE, {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+            window.onresize = () => {
+                this.$store.commit(SAVE_CLIENT_SIZE, {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+            }
+        },
+        methods: {
+            getSite() {
+                getSite().then(res => {
+                    console.log(res)
+                    // this.siteInfo = res.data.siteInfo
+                    // this.badges = res.data.badges
+                    this.newBlogList = res.data.newBlogList
+                    this.categoryList = res.data.categoryList
+                    this.tagList = res.data.tagList
+                    this.randomBlogList = res.data.randomBlogList
+                    // this.$store.dispatch('saveSiteInfo', this.siteInfo)
+                    // this.$store.dispatch('saveIntroduction', res.data.introduction)
+                    document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
+                })
+            },
+        }
     }
 </script>
 

@@ -192,7 +192,6 @@
             },
             deleteTagById(id) {
                 deleteTagById(id).then(res => {
-                    console.log(res)
                     if (res.data.code == 200) {
                         this.msgSuccess(res.data.msg)
                         this.getData()

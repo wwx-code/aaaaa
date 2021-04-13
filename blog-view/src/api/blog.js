@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export function getBlogById(token, id) {
+export function getBlogById(id) {
 	return axios({
 		url: 'blog',
 		method: 'GET',
-		headers: {
-			Authorization: token,
-		},
+		// headers: {
+		// 	Authorization: token,
+		// },
 		params: {
 			id
 		}

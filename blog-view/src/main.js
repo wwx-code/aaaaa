@@ -14,11 +14,16 @@ import 'semantic-ui-css/semantic.min.css'
 //element-ui
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-//v-viewer
+//v-viewer 用于图片预览
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 //directive
 // import './util/directive'
+
+//axios
+import axios from 'axios'
+import "./axios"
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 
@@ -32,6 +37,28 @@ Vue.prototype.msgSuccess = function (msg) {
 
 Vue.prototype.msgError = function (msg) {
   this.$message.error(msg)
+}
+
+
+const cubic = value => Math.pow(value, 3);
+const easeInOutCubic = value => value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
+
+//滚动至页面顶部，使用 Element-ui 回到顶部 组件中的算法
+Vue.prototype.scrollToTop = function () {
+  const el = document.documentElement
+  const beginTime = Date.now()
+  const beginValue = el.scrollTop
+  const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16))
+  const frameFunc = () => {
+    const progress = (Date.now() - beginTime) / 500;
+    if (progress < 1) {
+      el.scrollTop = beginValue * (1 - easeInOutCubic(progress))
+      rAF(frameFunc)
+    } else {
+      el.scrollTop = 0
+    }
+  }
+  rAF(frameFunc)
 }
 
 new Vue({

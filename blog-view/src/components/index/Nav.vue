@@ -1,5 +1,6 @@
 <template>
-    <div ref="nav" class="ui fixed inverted stackable pointing menu" :class="{'transparent':$route.name==='home'}">
+<!--    :class="{'transparent':$route.name==='home'}"-->
+    <div ref="nav" class="ui fixed inverted stackable pointing menu">
         <div class="ui container">
             <router-link to="/">
                 <h3 class="ui header item m-blue">{{ blogName }}</h3>
@@ -12,7 +13,7 @@
 					<i class="idea icon"></i>分类<i class="caret down icon"></i>
 				</span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item :command="category.name" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</el-dropdown-item>
+                    <el-dropdown-item :command="category.categoryName" v-for="(category,index) in categoryList" :key="index">{{ category.categoryName }}</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
             <router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='archives'}">
@@ -27,10 +28,10 @@
             <router-link to="/about" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='about'}">
                 <i class="info icon"></i>关于我
             </router-link>
-            <el-row>
-                <el-col :span="8">
+            <el-row class="search-wrap">
+                <el-col>
                     <el-input placeholder="search..." v-model="queryString" :clearable="true"
-                              @keyup.native.enter="search" size="small" style="min-width: 500px">
+                              @keyup.native.enter="search" size="small" style="min-width: 300px">
                         <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     </el-input>
                 </el-col>
@@ -76,16 +77,16 @@
         },
         mounted() {
             //监听页面滚动位置，改变导航栏的显示
-            window.addEventListener('scroll', () => {
-                //首页且不是移动端
-                if (this.$route.name === 'home') {
-                    if (window.scrollY > this.clientSize.clientHeight / 2) {
-                        this.$refs.nav.classList.remove('transparent')
-                    } else {
-                        this.$refs.nav.classList.add('transparent')
-                    }
-                }
-            })
+            // window.addEventListener('scroll', () => {
+            //     //首页且不是移动端
+            //     if (this.$route.name === 'home') {
+            //         if (window.scrollY > this.clientSize.clientHeight / 2) {
+            //             this.$refs.nav.classList.remove('transparent')
+            //         } else {
+            //             this.$refs.nav.classList.add('transparent')
+            //         }
+            //     }
+            // })
             //监听点击事件，收起导航菜单
             document.addEventListener('click', (e) => {
                 //遍历冒泡
@@ -220,5 +221,11 @@
         text-overflow: ellipsis;
         font-size: 12px;
         color: rgba(0, 0, 0, .70);
+    }
+
+    .search-wrap{
+        display: flex;
+        align-items: center;
+        margin-left: 400px;
     }
 </style>

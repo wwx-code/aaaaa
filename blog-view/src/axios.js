@@ -1,6 +1,6 @@
 import axios from "axios";
 import Element from "element-ui"
-import router from './router'
+import router from "./router";
 import store from './store'
 // import NProgress from 'nprogress'
 // import 'nprogress/nprogress.css'
@@ -20,14 +20,14 @@ axios.interceptors.request.use(config => {
 //后置拦截
 axios.interceptors.response.use(response => {
         let res = response.data;
-        const identification = config.headers.identification
+        const identification = response.headers.identification
         if (identification) {
             //保存身份标识到localStorage
             window.localStorage.setItem('identification', identification)
         }
 
         if (res.code == 200){
-            return response
+            return response.data
         }else {
             // 弹窗异常信息
             Element.Message.error(res.msg)
