@@ -60,8 +60,8 @@ export function getFriendInfo() {
 
 export function updateContent(content) {
 	return axios({
-		url: 'friendInfo/content',
-		method: 'PUT',
+		url: 'updateFriendInfo',
+		method: 'POST',
 		data: {
 			content
 		}

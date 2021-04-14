@@ -1,7 +1,7 @@
 <template>
 	<div class="ui bottom" style="text-align:center">
 		<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
-		               layout="prev, pager, next" background hide-on-single-page>
+		               layout="prev, pager, next" background>
 		</el-pagination>
 	</div>
 </template>

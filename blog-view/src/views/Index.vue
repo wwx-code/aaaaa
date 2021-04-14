@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import {getHitokoto, getSite} from '@/api/index'
+    import {getSite} from '@/api/index'
     import Nav from "@/components/index/Nav";
     import Tags from "@/components/sidebar/Tags";
     import RandomBlog from "@/components/sidebar/RandomBlog";
@@ -75,7 +75,6 @@
         methods: {
             getSite() {
                 getSite().then(res => {
-                    console.log(res)
                     // this.siteInfo = res.data.siteInfo
                     // this.badges = res.data.badges
                     this.newBlogList = res.data.newBlogList
@@ -84,7 +83,9 @@
                     this.randomBlogList = res.data.randomBlogList
                     // this.$store.dispatch('saveSiteInfo', this.siteInfo)
                     // this.$store.dispatch('saveIntroduction', res.data.introduction)
-                    document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
+                    // document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
+
+                    document.title = this.$route.meta.title
                 })
             },
         }

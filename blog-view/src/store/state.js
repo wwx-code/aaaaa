@@ -1,8 +1,8 @@
 export default {
 	siteInfo: '',
 	introduction: {
-		avatar: '',
-		name: '',
+		avatar: 'public/avatar.jpg',
+		name: '悠河',
 		rollText: [],
 	},
 	commentQuery: {

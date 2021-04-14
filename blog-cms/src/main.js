@@ -9,6 +9,11 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 //axios
 import axios from 'axios'
+//mavonEditor
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
 
 Vue.use(Element)
 

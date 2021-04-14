@@ -9,6 +9,7 @@ import CommentList from "../views/blog/comment/CommentList";
 import WriteMoment from "../views/blog/moment/WriteMoment";
 import MomentList from "../views/blog/moment/MomentList";
 import TagList from "../views/blog/tag/TagList";
+import About from "../views/page/about/About";
 import FriendList from "../views/page/friend/FriendList";
 import ExceptionLog from "../views/log/exceptionLog/ExceptionLog";
 import LoginLog from "../views/log/loginLog/LoginLog";
@@ -112,13 +113,13 @@ const routes = [
             //     title: '站点管理'
             //   }
             // },
-            // {
-            //   path: '/about',
-            //   component: About,
-            //   meta: {
-            //     title: '关于我'
-            //   }
-            // },
+            {
+                path: '/about',
+                component: About,
+                meta: {
+                    title: '关于我'
+                }
+            },
             {
                 path: '/friends',
                 component: FriendList,

@@ -40,6 +40,17 @@
                        layout="total, sizes, prev, pager, next, jumper" background>
         </el-pagination>
 
+        <el-divider></el-divider>
+        <!--友链页面信息-->
+        <el-form  label-position="top">
+            <el-form-item label="友链页面信息">
+                <mavon-editor v-model="content"></mavon-editor>
+            </el-form-item>
+            <el-form-item style="text-align: right;">
+                <el-button type="primary" icon="el-icon-check" @click="updateContent">保存</el-button>
+            </el-form-item>
+        </el-form>
+
         <!--添加友链对话框-->
         <el-dialog title="添加友链" width="40%" :visible.sync="addDialogVisible" @close="addDialogClosed">
             <el-form :model="addForm" ref="addFormRef" :rules="formRules" label-width="80px">
@@ -127,6 +138,7 @@
                 editDialogVisible: false,
                 total: 0,
                 friendList: [],
+                content: '',
                 formRules: {
                     nickname: [{required: true, message: '请输入昵称', trigger: 'blur'}],
                     description: [{required: true, message: '请输入描述', trigger: 'blur'}],
@@ -137,16 +149,22 @@
         },
         created() {
             this.getFriendList()
+            this.getFriendInfo()
         },
         methods: {
             //初始化页面获取友链信息
             getFriendList() {
                 getFriendsByQuery(this.queryInfo).then(res => {
-                    console.log(res)
                     this.friendList = res.data.data.records
                     this.total = res.data.data.total
                     this.msgSuccess(res.data.msg)
                 })
+            },
+            //获取友链页面信息
+            getFriendInfo() {
+              getFriendInfo().then(res => {
+                  this.content = res.data.data.content
+              })
             },
             showEditDialog(row) {
                 this.editForm = {...row}
@@ -202,6 +220,11 @@
                             this.editDialogVisible = false
                         })
                     }
+                })
+            },
+            updateContent() {
+                updateContent(this.content).then(res => {
+                    this.msgSuccess(res.data.msg)
                 })
             }
         }
