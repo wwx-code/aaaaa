@@ -28,18 +28,15 @@ export default {
 		// const blogToken = window.localStorage.getItem(`blog${rootState.commentQuery.blogId}`)
 		//如果有则发送博主身份Token
 		const adminToken = window.sessionStorage.getItem('adminToken')
-		const token = adminToken ? adminToken : (blogToken ? blogToken : '')
+		const token = adminToken ? adminToken : ''
 		getCommentListByQuery(token, rootState.commentQuery).then(res => {
-			if (res.code === 200) {
-				commit(SAVE_COMMENT_RESULT, res.data)
-			}
-		}).catch(() => {
-			Message.error("请求失败")
+			console.log(res)
+			commit(SAVE_COMMENT_RESULT, res.data)
 		})
 	},
-	setCommentQueryPage({commit}, page) {
+	/*setCommentQueryPage({commit}, page) {
 		commit(SET_COMMENT_QUERY_PAGE, {page})
-	},
+	},*/
 	setCommentQueryBlogId({commit}, blogId) {
 		commit(SET_COMMENT_QUERY_BLOG_ID, {blogId})
 	},
@@ -54,11 +51,11 @@ export default {
 	},
 	submitCommentForm({rootState, dispatch}, token) {
 		let form = {...rootState.commentForm}
-		form.page = rootState.commentQuery.page
+		// form.page = rootState.commentQuery.page
 		form.blogId = rootState.commentQuery.blogId
 		form.parentCommentId = rootState.parentCommentId
 		submitComment(token, form).then(res => {
-			if (res.code === 200) {
+			if (res.code == 200) {
 				Notification({
 					title: res.msg,
 					type: 'success'

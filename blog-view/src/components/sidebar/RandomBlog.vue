@@ -13,7 +13,7 @@
 							</router-link>
 						</div>
 						<div class="extra">
-							<router-link :to="`/tag/${tag.tagName}`" class="ui label m-text-500" :class="tag.color" v-for="(tag,index) in blog.tags" :key="index">{{ tag.tagName }}</router-link>
+							<router-link :to="`/tag/${tag.tagName}`" class="ui label m-text-500" :style="{background:tag.color,color:'#fff'}" v-for="(tag,index) in blog.tags" :key="index">{{ tag.tagName }}</router-link>
 							<a href="javascript:;" @click.prevent="toBlog(blog)" class="ui right floated">
 								阅读全文<i class="angle double right icon"></i>
 							</a>

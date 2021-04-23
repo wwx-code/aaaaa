@@ -6,7 +6,14 @@
                 <img src="@/assets/img/logo.png" alt="" height="60">
                 <span>yhblog 博客后台管理</span>
             </div>
-            <span ><el-link type="danger" @click="logout">退出</el-link></span>
+            <el-dropdown trigger="click" class="user" v-if="user" @command="logout">
+                <div class="el-dropdown-link">
+                    <el-avatar shape="circle" :size="45" fit="contain" :src="user.avatar"></el-avatar>
+                </div>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item icon="ali-iconfont icon-logout">退出</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </el-header>
         <!--页面主体-->
         <el-container>
@@ -21,6 +28,10 @@
                         text-color="#fff"
                         :default-openeds="defaultOpeneds"
                         active-text-color="#ffd04b">
+                    <el-menu-item index="/dashboard">
+                        <i class="iconfont ali-iconfont icon-dashboard"></i>
+                        <span>仪表盘</span>
+                    </el-menu-item>
                     <!-- 一级菜单 -->
                     <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
                         <!-- 一级菜单的模板区域 -->
@@ -106,11 +117,11 @@
                         id: 3,
                         title: '页面管理',
                         children: [
-                            {
-                                id: 31,
-                                title: '站点设置',
-                                path: '/siteSettings'
-                            },
+                            // {
+                            //     id: 31,
+                            //     title: '站点设置',
+                            //     path: '/siteSettings'
+                            // },
                             {
                                 id: 32,
                                 title: '友链管理',
@@ -127,11 +138,11 @@
                         id: 4,
                         title: '日志管理',
                         children: [
-                            {
-                                id: 41,
-                                title: '任务日志',
-                                path: '/jobs/logs'
-                            },
+                            // {
+                            //     id: 41,
+                            //     title: '任务日志',
+                            //     path: '/jobs/logs'
+                            // },
                             {
                                 id: 42,
                                 title: '登录日志',
@@ -154,22 +165,22 @@
                             }
                         ]
                     },
-                    {
-                        id: 5,
-                        title: '数据统计',
-                        children: [
-                            {
-                                id: 51,
-                                title: '定时任务',
-                                path: '/jobs'
-                            },
-                            {
-                                id: 52,
-                                title: '访客统计',
-                                path: '/visitor'
-                            }
-                        ]
-                    },
+                    // {
+                    //     id: 5,
+                    //     title: '数据统计',
+                    //     children: [
+                    //         {
+                    //             id: 51,
+                    //             title: '定时任务',
+                    //             path: '/jobs'
+                    //         },
+                    //         {
+                    //             id: 52,
+                    //             title: '访客统计',
+                    //             path: '/visitor'
+                    //         }
+                    //     ]
+                    // },
                 ],
                 iconsObj: {
                     '1': 'el-icon-menu',
@@ -200,17 +211,22 @@
                 user: null,
             }
         },
+        created() {
+            this.getUserInfo()
+        },
         methods: {
+            getUserInfo() {
+                this.user = JSON.parse(window.sessionStorage.getItem('userInfo') || null)
+                console.log(this.user)
+                if (!this.user) {
+                    this.$router.push('/login')
+                }
+            },
             logout() {
-                const _this = this
-                _this.$axios.get("/logout",{
-                    // headers: {
-                    //     "Authorization": localStorage.getItem("token")
-                    // }
-                }).then(res => {
-                    _this.$store.commit("REMOVE_INFO")
-                    _this.$router.push("/login")
-                })
+                window.localStorage.clear()
+                window.sessionStorage.clear()
+                this.$router.push('/login')
+                this.msgSuccess('退出成功')
             }
         }
     }

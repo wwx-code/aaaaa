@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from "../views/Home";
 import Login from "../views/Login";
+import Dashboard from "../views/dashboard/Dashboard";
 import WriteBlog from "../views/blog/blog/WriteBlog";
 import BlogList from "../views/blog/blog/BlogList";
 import CategoryList from "../views/blog/category/CategoryList";
@@ -22,7 +23,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: '/home',
+        redirect: '/login',
     },
     {
         path: '/login',
@@ -34,15 +35,15 @@ const routes = [
     {
         path: '/home',
         component: Home,
-        redirect: '/blogs',
+        redirect: '/dashboard',
         children: [
-            // {
-            //   path: '/dashboard',
-            //   component: Dashboard,
-            //   meta: {
-            //     title: '仪表盘'
-            //   }
-            // },
+            {
+              path: '/dashboard',
+              component: Dashboard,
+              meta: {
+                title: '仪表盘'
+              }
+            },
             {
                 path: '/blogs/write',
                 component: WriteBlog,

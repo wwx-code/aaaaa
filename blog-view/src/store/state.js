@@ -6,7 +6,6 @@ export default {
 		rollText: [],
 	},
 	commentQuery: {
-		page: 0,
 		blogId: null,
 		pageNum: 1,
 		pageSize: 5

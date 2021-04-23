@@ -21,7 +21,7 @@
                             <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none':focusMode}"/>
                             <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
                             <!--只在文章页面显示目录-->
-                            <Tocbot v-if="$route.name==='blog'"/>
+<!--                            <Tocbot v-if="$route.name==='blog'"/>-->
                         </div>
                     </div>
                 </div>

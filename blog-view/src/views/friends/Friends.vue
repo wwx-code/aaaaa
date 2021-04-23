@@ -6,7 +6,7 @@
 
         <div class="ui attached segment">
             <div class="ui link four doubling cards">
-                <sui-card v-for="(item,index) in friendList" :key="index" :href="item.website">
+                <sui-card v-for="(item,index) in friendList" :key="index" @click="toFriend(item)">
 <!--                    <a ><sui-image :src="item.avatar"/></a>-->
                     <div class="ui small image image-wrap">
                         <img src="../../assets/avatar.jpg">
@@ -57,6 +57,12 @@
                     var result = md.render(res.data.content)
                     this.content = result
                 })
+            },
+            toFriend(item)  {
+                //增加浏览次数
+                addViewsByNickname(item.nickname)
+                //跳转至友链页面
+                window.open(item.website)
             }
         }
     }

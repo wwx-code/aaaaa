@@ -23,13 +23,14 @@ export default {
 		state.introduction = introduction
 	},
 	[SAVE_COMMENT_RESULT](state, data) {
+		console.log(data)
 		state.commentCount = data.count
-		state.commentTotalPage = data.comments.totalPage
-		state.comments = data.comments.list
+		state.commentTotalPage = data.comment.pages
+		state.comments = data.comment.records
 	},
-	[SET_COMMENT_QUERY_PAGE](state, {page}) {
+	/*[SET_COMMENT_QUERY_PAGE](state, {page}) {
 		state.commentQuery.page = page
-	},
+	},*/
 	[SET_COMMENT_QUERY_BLOG_ID](state, {blogId}) {
 		state.commentQuery.blogId = blogId
 	},

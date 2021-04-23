@@ -1,5 +1,5 @@
 import axios from "axios";
-import Element from "element-ui"
+import vue from 'vue'
 import router from './router'
 import store from './store'
 
@@ -24,16 +24,18 @@ axios.interceptors.response.use(response => {
         }else {
             console.log(res)
             // 弹窗异常信息
-            Element.Message.error(res.msg)
+            vue.prototype.msgError(res.msg)
+            // this.msgError(res.msg)
             // 直接拒绝往下面返回结果信息
             return Promise.reject(response.data.msg)
         }
     },
     error => {
+        let message=''
 
         //返回的结果为错误类型
         if (error.response.data){
-            error.message = error.response.data.msg
+           message = error.response.data.message
         }
 
         //401：未认证
@@ -44,7 +46,7 @@ axios.interceptors.response.use(response => {
             router.push("/login")
         }
 
-        Element.Message.error(error.message, {duration: 3 * 1000})
+        vue.prototype.msgError(message)
         return Promise.reject(error)
     }
 )

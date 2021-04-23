@@ -36,13 +36,14 @@ axios.interceptors.response.use(response => {
         }
     },
     error => {
+        let message=''
 
         //返回的结果为错误类型
         if (error.response.data){
-            error.message = error.response.data.msg
+            message = error.response.data.message
         }
 
-        Element.Message.error(error.message, {duration: 3 * 1000})
+        Element.Message.error(message, {duration: 3 * 1000})
         return Promise.reject(error)
     }
 )

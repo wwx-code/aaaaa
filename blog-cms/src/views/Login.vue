@@ -111,6 +111,7 @@
     }
 
     .login_form {
+        margin-left: -40px;
         position: absolute;
         bottom: 0;
         width: 100%;

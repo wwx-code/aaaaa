@@ -67,17 +67,22 @@
             </div>
         </div>
 
+        <div class="ui segment teal attached threaded comments">
+            <CommentList :page="8" :blogId="blogId" v-if="blog.isCommentEnabled"/>
+            <h3 v-else>评论已关闭</h3>
+        </div>
     </div>
 </template>
 
 <script>
     import {getBlogById} from "@/api/blog";
     import 'github-markdown-css'
-    // import CommentList from "@/components/comment/CommentList";
     import {mapState} from "vuex";
     import {SET_FOCUS_MODE} from '../../store/mutations-types';
+    import CommentList from "@/components/comment/CommentList";
     export default {
         name: "Blog",
+        components: {CommentList},
         data() {
             return {
                 blog: {},
@@ -133,7 +138,7 @@
                 // const token = adminToken ? adminToken : (blogToken ? blogToken : '')
                 getBlogById(id).then(res => {
                     this.blog = res.data
-                    document.title = this.blog.title + this.siteInfo.webTitleSuffix
+                    document.title = this.blog.title
 
                     var markdownIt = require("markdown-it")
                     var md = new markdownIt()

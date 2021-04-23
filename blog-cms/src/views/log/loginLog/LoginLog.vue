@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column label="描述" prop="description"></el-table-column>
             <el-table-column label="操作时间" width="170">
-                <template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
+                <template v-slot="scope">{{ scope.row.createTime }}</template>
             </el-table-column>
             <el-table-column label="操作" width="120">
                 <template v-slot="scope">
