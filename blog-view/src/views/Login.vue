@@ -45,15 +45,9 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         // const _this = this
-                        this.$axios.post("/login",this.loginForm).then(res => {
-                            const jwt = res.headers['authorization']
-                            const userInfo = res.data.data
-
-                            this.$store.commit("SET_TOKEN",jwt)
-                            this.$store.commit("SET_USERINFO",userInfo)
-
-                            // console.log(_this.$store.getters.getUser)
-
+                        this.$axios.post("admin/loginViews",this.loginForm).then(res => {
+                            const jwt = res.data
+                            window.sessionStorage.setItem("adminToken",jwt)
                             this.$router.push("/home")
                         })
                     } else {
@@ -73,7 +67,7 @@
     .login_container {
         height: 100%;
         width: 100%;
-        background-image: url("../assets/img/login_bg.jpg");
+        background-image: url("../assets/login_bg.jpg");
         background-size: cover;
         background-position: center;
         position: relative;

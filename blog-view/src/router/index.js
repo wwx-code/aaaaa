@@ -10,6 +10,7 @@ import Category from "@/views/category/Category";
 import Moments from "@/views/moments/Moments";
 import Friends from "@/views/friends/Friends";
 import About from "@/views/about/About";
+import Login from "@/views/Login";
 
 Vue.use(VueRouter)
 
@@ -84,6 +85,13 @@ const routes = [
                 }
             }
         ]
+    },
+    {
+        path: '/login',
+        component: Login,
+        meta: {
+            title: '博主登录'
+        }
     }
 ]
 

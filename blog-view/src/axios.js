@@ -14,6 +14,11 @@ axios.interceptors.request.use(config => {
     if (identification && !(config.url.startsWith('http://') || config.url.startsWith('https://'))) {
         config.headers.identification = identification
     }
+    if(window.localStorage.getItem("token")) {
+        config.headers = {
+            "Authorization": localStorage.getItem("token")
+        }
+    }
     return config
 })
 
@@ -43,7 +48,7 @@ axios.interceptors.response.use(response => {
             message = error.response.data.message
         }
 
-        Element.Message.error(message, {duration: 3 * 1000})
+        vue.prototype.msgError(message)
         return Promise.reject(error)
     }
 )
