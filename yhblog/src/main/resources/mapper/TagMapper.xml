@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.wwxyh.mapper.TagMapper">
+
+    <resultMap id="tag" type="top.wwxyh.entity.Tag">
+        <id property="id" column="id"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="color" column="color"/>
+    </resultMap>
+
+    <!--按博客id查询List-->
+    <select id="getTagListByBlogId" resultMap="tag">
+        select t.tag_name, t.color
+        from blog_tag as bt left join tag as t on bt.tag_id=t.id
+        where bt.blog_id=#{blogId}
+    </select>
+
+    <resultMap id="tagBlogCount" type="top.wwxyh.common.vo.TagBlogCount">
+        <id property="id" column="tag_id"/>
+        <result property="value" column="blog_count"/>
+    </resultMap>
+
+    <!--查询每个标签的博客数量-->
+    <select id="getTagBlogCount" resultMap="tagBlogCount">
+        select tag_id, count(tag_id) as blog_count from blog_tag group by tag_id
+    </select>
+</mapper>

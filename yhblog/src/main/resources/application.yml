@@ -1,0 +1,49 @@
+# database Config
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.jdbc.Driver  mysql5
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 2076211795@qq.com
+    password: amfydrgyitjyeehg
+
+mybatis-plus:
+  # 告知mybatis-plus映射配置路径
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+
+wwxyh:
+  jwt:
+    # 加密秘钥
+    secretKey: f4e2e52034348f86b67cde581c0f9eb5
+#    secretKey: abcdefghijklmnopqrstuvwxyz
+    # token有效时长，7天，单位毫秒 1000 * 60 * 60 * 24 * 7
+    expireTime: 604800000
+    header: Authorization
+
+# 日志级别
+logging:
+  level:
+    root: info
+    top.wwxyh: debug
+  # 指定日志文件存放位置
+  file: /log/blog.log
+#  file:
+#    path: /log/blog.log
+
+server:
+  port: 8080
+  website:
+    # 前台页面地址
+    url: http://localhost:8081
+
+# redis配置
+#shiro-redis:
+#  enable: true
+#  redis-manager:
+#    host: 127.0.0.1:6379

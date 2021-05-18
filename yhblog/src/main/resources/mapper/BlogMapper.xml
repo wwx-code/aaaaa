@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.wwxyh.mapper.BlogMapper">
+
+    <resultMap id="BlogAdmin" type="top.wwxyh.common.dto.BlogAdmin">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="description" column="description"/>
+        <result property="isPublished" column="is_published"/>
+        <result property="isRecommend" column="is_recommend"/>
+        <result property="isAppreciation" column="is_appreciation"/>
+        <result property="isCommentEnabled" column="is_comment_enabled"/>
+        <result property="isTop" column="is_top"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="password" column="password"/>
+        <association property="user" javaType="top.wwxyh.entity.User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="username"/>
+            <result property="nickname" column="nickname"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="createTime" column="user_create_time"/>
+            <result property="updateTime" column="user_update_time"/>
+            <result property="role" column="role"/>
+        </association>
+        <association property="category" javaType="top.wwxyh.entity.Category">
+            <id property="id" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="top.wwxyh.entity.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
+    <!--按标题和分类查询博客List-->
+    <select id="getListByTitleAndCategoryId" resultMap="BlogAdmin">
+        <bind name="titlePattern" value="'%' + title + '%'"/>
+        select b.id, b.title, b.create_time, b.update_time, b.is_published, b.is_recommend, b.is_appreciation,
+        b.is_comment_enabled, b.is_top, b.password,
+        c.id as category_id, c.category_name
+        from blog as b left join category as c on b.category_id=c.id
+        <where>
+            <if test="title!=null and title!=''">
+                b.title like #{titlePattern}
+            </if>
+            <if test="categoryId!=null">
+                and b.category_id=#{categoryId}
+            </if>
+        </where>
+        order by b.id desc
+    </select>
+
+    <!--按id查询博客-->
+    <select id="getBlogById" resultMap="BlogAdmin">
+        select b.id, b.description, b.title, b.content, b.is_published, b.is_recommend, b.is_appreciation, b.is_comment_enabled, b.is_top,
+        b.create_time, b.update_time, b.views, b.words, b.read_time, b.password,
+        c.category_name, c.id as category_id,
+        t.tag_name as tag_name, t.color, t.id AS tag_id
+        from (((blog as b left join category as c on b.category_id=c.id) left join blog_tag as bt on b.id=bt.blog_id) left join tag as t on bt.tag_id=t.id)
+        where b.id=#{id}
+    </select>
+
+    <resultMap id="BlogInfo" type="top.wwxyh.common.vo.BlogInfo">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="isTop" column="is_top"/>
+        <result property="password" column="password"/>
+        <association property="category" javaType="top.wwxyh.entity.Category">
+            <id property="id" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="top.wwxyh.entity.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="tagName" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
+    <!--博客首页按置顶、推荐、创建时间排序 分页查询博客简要信息列表-->
+    <select id="getBlogInfoByIsPublish" resultMap="BlogInfo">
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, b.password, c.id as category_id, c.category_name
+        from blog as b left join category as c on b.category_id=c.id
+        where b.is_published=true ORDER BY is_top DESC,is_recommend DESC,create_time DESC
+    </select>
+
+    <!--根据分类name查询公开博客List-->
+    <select id="getBlogInfoListByCategoryNameAndIsPublished" resultMap="BlogInfo">
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, b.password, c.category_name
+        from category as c left join blog as b on b.category_id=c.id
+        where c.category_name=#{categoryName} and b.is_published=true
+        ORDER BY is_top DESC,create_time DESC
+    </select>
+
+    <!--根据分类id查询公开博客List-->
+    <select id="getBlogInfoListByCategoryIdAndIsPublished" resultMap="BlogInfo">
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, b.password, c.category_name
+        from category as c,blog as b
+        where b.category_id=#{categoryId} and b.is_published=true and b.category_id=c.id
+    </select>
+
+    <!--根据标签name查询公开博客List-->
+    <select id="getBlogInfoListByTagNameAndIsPublished" resultMap="BlogInfo">
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, b.password, c.category_name
+        from (((tag as t left join blog_tag as bt on t.id=bt.tag_id) left join blog as b on bt.blog_id=b.id) left join category as c on b.category_id=c.id)
+        where t.tag_name=#{tagName} and b.is_published=true
+        ORDER BY is_top DESC,create_time DESC
+    </select>
+
+    <!--根据标签id查询公开博客List-->
+    <select id="getBlogInfoListByTagIdAndIsPublished" resultMap="BlogInfo">
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, b.password, c.category_name, t.tag_name, t.color
+        from (((tag as t left join blog_tag as bt on t.id=bt.tag_id) left join blog as b on bt.blog_id=b.id) left join category as c on b.category_id=c.id)
+        where t.id=#{id} and b.is_published=true
+    </select>
+
+    <resultMap id="BlogDetail" type="top.wwxyh.common.vo.BlogDetail">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="isAppreciation" column="is_appreciation"/>
+        <result property="isCommentEnabled" column="is_comment_enabled"/>
+        <result property="isTop" column="is_top"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="password" column="password"/>
+        <association property="category" javaType="top.wwxyh.entity.Category">
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="top.wwxyh.entity.Tag">
+            <result property="tagName" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
+    <!--按id查询公开博客-->
+    <select id="getBlogByIdAndIsPublished" resultMap="BlogDetail">
+        select b.id, b.title, b.content, b.is_appreciation, b.is_comment_enabled, b.is_top,
+        b.create_time, b.update_time, b.views, b.words, b.read_time, b.password,
+        c.category_name,
+        t.tag_name as tag_name, t.color
+        from (((blog as b left join category as c on b.category_id=c.id) left join blog_tag as bt on b.id=bt.blog_id) left join tag as t on bt.tag_id=t.id)
+        where b.id=#{id} and b.is_published=true
+    </select>
+
+    <!--查询公开博客年月List-->
+    <select id="getGroupYearMonthByIsPublished" resultType="java.lang.String">
+        select date_format(create_time, "%Y年%m月")
+        from blog
+        where is_published=true
+        group by date_format(create_time, "%Y年%m月")
+        order by date_format(create_time, "%Y年%m月") desc
+    </select>
+
+    <resultMap id="archiveBlog" type="top.wwxyh.common.vo.ArchiveBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="day" column="create_day"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <!--按年月查询公开博客简要信息List-->
+    <select id="getArchiveBlogListByYearMonthAndIsPublished" resultMap="archiveBlog">
+        select id, title, password, date_format(create_time, "%d日") as create_day
+        from blog
+        where date_format(create_time, "%Y年%m月")=#{yearMonth} and is_published=true
+        order by create_time desc
+    </select>
+
+    <resultMap id="BlogIdAndTitle" type="top.wwxyh.common.vo.BlogIdAndTitle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <!--查询公开且推荐-->
+    <select id="getNewBlogListByIsPublishedAndIsRecommend" resultMap="BlogIdAndTitle">
+        select id, title from blog
+        where is_published=true and is_recommend=true
+        order by create_time desc
+    </select>
+
+    <resultMap id="randomBlog" type="top.wwxyh.common.vo.RandomBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <association property="category" javaType="top.wwxyh.entity.Category">
+            <result property="categoryName" column="category_name"/>
+        </association>
+    </resultMap>
+
+    <!--查询随机的公开文章-->
+    <select id="getRandomBlogListByLimitNumAndIsPublished" resultMap="randomBlog">
+        select b.id, b.title, c.category_name
+        from blog as b left join category as c on b.category_id=c.id
+        where b.is_published=true
+        order by rand()
+        limit #{limitNum}
+    </select>
+
+    <resultMap id="CategoryBlogCount" type="top.wwxyh.common.vo.CategoryBlogCount">
+        <id property="id" column="category_id"/>
+        <result property="value" column="blog_count"/>
+    </resultMap>
+
+    <!--查询每个分类的博客数量-->
+    <select id="getCategoryBlogCountList" resultMap="CategoryBlogCount">
+        select category_id, count(category_id) as blog_count from blog group by category_id
+    </select>
+</mapper>
