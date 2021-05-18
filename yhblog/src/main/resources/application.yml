@@ -10,8 +10,8 @@ spring:
   mail:
     host: smtp.qq.com
     port: 587
-    username: 2076211795@qq.com
-    password: amfydrgyitjyeehg
+    username: qq邮箱账号
+    password: 数字密码
 
 mybatis-plus:
   # 告知mybatis-plus映射配置路径
