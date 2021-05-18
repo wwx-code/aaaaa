@@ -79,7 +79,6 @@
             submit(isPublished) {
                 this.form.content = this.vditor.getValue()
                 this.form.isPublished = isPublished
-                console.log(this.$route.params.id)
                 if (this.$route.params.id) {
                     updateMoment(this.form).then(res => {
                         if (res.data.code == 200) {

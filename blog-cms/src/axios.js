@@ -31,17 +31,20 @@ axios.interceptors.response.use(response => {
         }
     },
     error => {
+        console.log(error)
         let message=''
 
         //返回的结果为错误类型
         if (error.response.data){
-           message = error.response.data.message
+           message = error.response.data.msg
         }
 
         //401：未认证
         if (error.response.status == 401){
             //删除token和userInfo信息
             store.commit("REMOVE_INFO")
+            // 弹窗异常信息
+            // vue.prototype.msgError(message)
             //跳转至登录页面
             router.push("/login")
         }

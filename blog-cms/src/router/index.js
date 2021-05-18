@@ -107,13 +107,6 @@ const routes = [
                     title: '评论管理'
                 }
             },
-            // {
-            //   path: '/siteSettings',
-            //   component: SiteSetting,
-            //   meta: {
-            //     title: '站点管理'
-            //   }
-            // },
             {
                 path: '/about',
                 component: About,
@@ -128,20 +121,6 @@ const routes = [
                     title: '友链管理'
                 }
             },
-            // {
-            //   path: '/jobs',
-            //   component: JobList,
-            //   meta: {
-            //     title: '定时任务'
-            //   }
-            // },
-            // {
-            //   path: '/jobs/logs',
-            //   component: JobLog,
-            //   meta: {
-            //     title: '任务日志'
-            //   }
-            // },
             {
                 path: '/operationLog',
                 component: OperationLog,
@@ -170,13 +149,6 @@ const routes = [
                     title: '访问日志'
                 }
             },
-            // {
-            //   path: '/visitor',
-            //   component: Visitor,
-            //   meta: {
-            //     title: '访客统计'
-            //   }
-            // },
         ]
     }
 ]

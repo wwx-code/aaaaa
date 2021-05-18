@@ -21,7 +21,7 @@ import Viewer from 'v-viewer'
 // import './util/directive'
 
 //axios
-import axios from 'axios'
+import validateaxios from 'axios'
 import "./axios"
 Vue.prototype.$axios = axios
 

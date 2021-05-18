@@ -72,11 +72,7 @@
                     <el-radio-group v-model="radio">
                         <el-radio :label="1">公开</el-radio>
                         <el-radio :label="2">私密</el-radio>
-                        <el-radio :label="3">密码保护</el-radio>
                     </el-radio-group>
-                </el-form-item>
-                <el-form-item label="密码" v-if="radio===3">
-                    <el-input v-model="visForm.password"></el-input>
                 </el-form-item>
                 <el-form-item v-if="radio!==2">
                     <el-row>

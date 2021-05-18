@@ -72,11 +72,7 @@
                     <el-radio-group v-model="radio">
                         <el-radio :label="1">公开</el-radio>
                         <el-radio :label="2">私密</el-radio>
-                        <el-radio :label="3">密码保护</el-radio>
                     </el-radio-group>
-                </el-form-item>
-                <el-form-item label="密码" v-if="radio===3">
-                    <el-input v-model="form.password"></el-input>
                 </el-form-item>
                 <el-form-item v-if="radio!==2">
                     <el-row>
@@ -210,30 +206,13 @@
                         this.form = vdata.data
                         this.descriptionVditor.setValue(this.form.description)
                         this.contentVditor.setValue(this.form.content)
-                        this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
+                        this.radio = this.form.isPublished ? (this.form.password !== '' ? 3 : 1) : 2
                     } else {
                         this.msgError(res.msg)
                     }
                 }).catch(() => {
                     // this.msgError('请求失败')
                 })
-                // getBlogById(id).then(res => {
-                //     if (res.data.code == '200') {
-                //         // this.computeCategoryAndTag(res.data.data)
-                //         // this.msgSuccess(res.data.msg);
-                //         this.form = res.data.data
-                //         this.descriptionVditor.setValue(this.data.data.description)
-                //         this.contentVditor.setValue(this.data.data.content)
-                //         var a = this.descriptionVditor.getValue()
-                //         var b = this.contentVditor.getValue()
-                //         console.log(a,b)
-                //         this.radio = this.data.data.isPublished ? (this.data.data.password !== '' ? 3 : 1) : 2
-                //     } else {
-                //         this.msgError(res.data.msg)
-                //     }
-                // }).catch(() => {
-                //     this.msgError('请求失败')
-                // })
             },
             computeCategoryAndTag(blog) {
                 blog.categoryId = blog.category.id

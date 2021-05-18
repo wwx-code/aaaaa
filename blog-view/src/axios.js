@@ -9,15 +9,15 @@ axios.defaults.baseURL="http://localhost:8080/"
 
 //前置拦截
 axios.interceptors.request.use(config => {
+    if(window.localStorage.getItem("adminToken")) {
+        config.headers = {
+            "Authorization": localStorage.getItem("adminToken")
+        }
+    }
     const identification = window.localStorage.getItem('identification')
     //identification存在，且是基于baseURL的请求
     if (identification && !(config.url.startsWith('http://') || config.url.startsWith('https://'))) {
         config.headers.identification = identification
-    }
-    if(window.localStorage.getItem("token")) {
-        config.headers = {
-            "Authorization": localStorage.getItem("token")
-        }
     }
     return config
 })

@@ -7,10 +7,12 @@
 
             <div v-for="comment in comments" :key="comment.id">
                 <sui-comment>
-                    <!--<sui-comment-avatar :src="comment.avatar" />-->
-                    <sui-comment-avatar :src="comment.avatar" />
+<!--                    <sui-comment-avatar :src="comment.avatar" />-->
+                    <sui-comment-avatar v-if="comment.adminComment" :src="comment.avatar" />
+                    <sui-comment-avatar v-else src="/img/visitor.jpg" />
                     <sui-comment-content>
                         <a is="sui-comment-author">{{ comment.nickname }}</a>
+                        <div class="ui black left pointing label" v-if="comment.adminComment">博主</div>
                         <sui-comment-metadata>
                             <div>{{ comment.createTime }}</div>
                             <div>
@@ -24,10 +26,13 @@
                     <sui-comment-group v-if="comment.replyComments.length>0">
                         <div v-for="reply in comment.replyComments" :key="reply.id">
                             <sui-comment>
-                                <!--<sui-comment-avatar :src="reply.avatar" />-->
-                                <sui-comment-avatar :src="reply.avatar" />
+                                <!--TODO 评论头像设置-->
+<!--                                <sui-comment-avatar :src="reply.avatar" />-->
+                                <sui-comment-avatar v-if="reply.adminComment" :src="reply.avatar" />
+                                <sui-comment-avatar v-else src="/img/visitor.jpg" />
                                 <sui-comment-content>
                                     <a is="sui-comment-author">{{ reply.nickname }}</a>
+                                    <div class="ui black left pointing label" v-if="reply.adminComment">博主</div>
                                     <sui-comment-metadata>
                                         <div>{{ reply.createTime }}</div>
                                         <div>

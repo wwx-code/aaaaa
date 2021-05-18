@@ -23,7 +23,10 @@
             </el-table-column>
             <el-table-column label="头像" width="80">
                 <template v-slot="scope">
-                    <el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
+                    <!--TODO 评论头像设置-->
+<!--                    <el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>-->
+                    <el-avatar shape="square" :size="60" fit="contain" v-if="scope.row.adminComment" src="/img/avatar.jpg"></el-avatar>
+                    <el-avatar shape="square" :size="60" fit="contain" v-else src="/img/visitor.jpg"></el-avatar>
                 </template>
             </el-table-column>
             <el-table-column label="邮箱" prop="email" show-overflow-tooltip></el-table-column>
@@ -33,7 +36,8 @@
             <el-table-column label="QQ" prop="qq" width="115"></el-table-column>
             <el-table-column label="所在页面" show-overflow-tooltip>
                 <template v-slot="scope">
-                    <el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank">
+                    <!--TODO 跳转页面修改，现在默认条“localhost:{后台管理端口}”，应改为前台端口-->
+                    <el-link type="success" :href="`http://localhost:8081/blog/${scope.row.blog.id}`" target="_blank">
                         {{ scope.row.blog.title }}
                     </el-link>
                 </template>

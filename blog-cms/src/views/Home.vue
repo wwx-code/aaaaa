@@ -117,11 +117,6 @@
                         id: 3,
                         title: '页面管理',
                         children: [
-                            // {
-                            //     id: 31,
-                            //     title: '站点设置',
-                            //     path: '/siteSettings'
-                            // },
                             {
                                 id: 32,
                                 title: '友链管理',
@@ -138,11 +133,6 @@
                         id: 4,
                         title: '日志管理',
                         children: [
-                            // {
-                            //     id: 41,
-                            //     title: '任务日志',
-                            //     path: '/jobs/logs'
-                            // },
                             {
                                 id: 42,
                                 title: '登录日志',
@@ -165,22 +155,6 @@
                             }
                         ]
                     },
-                    // {
-                    //     id: 5,
-                    //     title: '数据统计',
-                    //     children: [
-                    //         {
-                    //             id: 51,
-                    //             title: '定时任务',
-                    //             path: '/jobs'
-                    //         },
-                    //         {
-                    //             id: 52,
-                    //             title: '访客统计',
-                    //             path: '/visitor'
-                    //         }
-                    //     ]
-                    // },
                 ],
                 iconsObj: {
                     '1': 'el-icon-menu',
@@ -217,7 +191,6 @@
         methods: {
             getUserInfo() {
                 this.user = JSON.parse(window.sessionStorage.getItem('userInfo') || null)
-                console.log(this.user)
                 if (!this.user) {
                     this.$router.push('/login')
                 }

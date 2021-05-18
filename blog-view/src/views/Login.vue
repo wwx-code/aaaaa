@@ -47,7 +47,7 @@
                         // const _this = this
                         this.$axios.post("admin/loginViews",this.loginForm).then(res => {
                             const jwt = res.data
-                            window.sessionStorage.setItem("adminToken",jwt)
+                            window.localStorage.setItem("adminToken",jwt)
                             this.$router.push("/home")
                         })
                     } else {

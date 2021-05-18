@@ -19,8 +19,8 @@
                         <div class="content typo" :class="{'privacy':!moment.isPublished}" v-viewer v-html="moment.content"></div>
                         <div class="extra content">
                             <a class="left floated" @click="like(moment.id)">
-<!--                                <i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"></i>{{ moment.likes }}-->
-                                <i class="heart icon" :class="isLike = false ?'like-color':'outline'"></i>{{ moment.likes }}
+                                <i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"></i>{{ moment.likes }}
+                                <!--<i class="heart icon" :class="isLike = false ?'like-color':'outline'"></i>{{ moment.likes }}-->
                             </a>
                         </div>
                     </div>
@@ -41,15 +41,27 @@
         data() {
             return {
                 //用localStorage本地存储已点赞的动态id数组
-                /*likeMomentIds: JSON.parse(window.localStorage.getItem('likeMomentIds') || '[]'),*/
+                likeMomentIds: JSON.parse(window.localStorage.getItem('likeMomentIds') || '[]'),
                 momentList: [],
                 pageNum: 1,
-                totalPage: 0,
-                isLike: false,
+                totalPage: 0
             }
         },
         created() {
             this.getMomentList()
+        },
+        computed: {
+            isLike() {
+                return function (id) {
+                    return this.likeMomentIds.indexOf(id) > -1
+                }
+            }
+        },
+        watch: {
+            likeMomentIds(newValue) {
+                //将likeMomentIds最新值的json数据保存到localStorage
+                window.localStorage.setItem('likeMomentIds', JSON.stringify(newValue))
+            }
         },
         methods: {
             getMomentList() {
@@ -64,11 +76,23 @@
                 this.getMomentList()
             },
             like(id) {
+                if (this.likeMomentIds.indexOf(id) > -1) {
+                    this.$notify({
+                        title: '不可以重复点赞哦',
+                        type: 'warning'
+                    })
+                    return
+                }
                 likeMoment(id).then(res => {
-                    this.isLike = true
                     this.$notify({
                         title: res.msg,
                         type: 'success'
+                    })
+                    this.likeMomentIds.push(id)
+                    this.momentList.forEach(item => {
+                        if (item.id === id) {
+                            return item.likes++
+                        }
                     })
                 })
             }

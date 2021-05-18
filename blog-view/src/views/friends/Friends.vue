@@ -7,10 +7,10 @@
         <div class="ui attached segment">
             <div class="ui link four doubling cards">
                 <sui-card v-for="(item,index) in friendList" :key="index" @click="toFriend(item)">
-<!--                    <a ><sui-image :src="item.avatar"/></a>-->
-                    <div class="ui small image image-wrap">
-                        <img src="../../assets/avatar.jpg">
-                    </div>
+                    <a ><sui-image :src="item.avatar"/></a>
+<!--                    <div class="ui small image image-wrap">-->
+<!--                        <img src="../../assets/avatar.jpg">-->
+<!--                    </div>-->
                     <sui-card-content class="ui center aligned">
                         <sui-card-header><a>{{ item.nickname }}</a></sui-card-header>
                         <sui-card-meta>
